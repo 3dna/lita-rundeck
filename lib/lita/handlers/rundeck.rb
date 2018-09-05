@@ -269,7 +269,7 @@ module Lita
               id: execution.id,
               current_duration: current_duration,
               average_duration: average_duration,
-              job_url: execution.permalink,
+              job_url: execution.permalink
               )
             sleep 10
           else
