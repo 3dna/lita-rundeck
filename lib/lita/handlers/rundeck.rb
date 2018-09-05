@@ -269,7 +269,7 @@ module Lita
               id: execution.id,
               current_duration: current_duration,
               average_duration: average_duration,
-              job_url: execution.permalink
+              job_url: execution.href
               )
             sleep 10
           else
@@ -282,7 +282,7 @@ module Lita
       def resolve(e)
         case e.status
         when "running"
-          t("run.success", id: e.id, average_duration: e.job.average_duration.to_f / 1000.0, job_url: e.permalink)
+          t("run.success", id: e.id, average_duration: e.job.average_duration.to_f / 1000.0, job_url: e.href)
         when "api.error.execution.conflict"
           t("run.conflict")
         when "api.error.item.unauthorized"
