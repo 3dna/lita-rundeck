@@ -268,7 +268,8 @@ module Lita
               "run.still_running",
               id: execution.id,
               current_duration: current_duration,
-              average_duration: average_duration
+              average_duration: average_duration,
+              job_url: execution.href
               )
             sleep 10
           else
@@ -281,7 +282,7 @@ module Lita
       def resolve(e)
         case e.status
         when "running"
-          t("run.success", id: e.id, average_duration: e.job.average_duration.to_f / 1000.0)
+          t("run.success", id: e.id, average_duration: e.job.average_duration.to_f / 1000.0, job_url: e.href)
         when "api.error.execution.conflict"
           t("run.conflict")
         when "api.error.item.unauthorized"
@@ -764,7 +765,7 @@ module Lita
         class Execution
           attr_accessor :id, :href, :status, :message, :project, :user, :start, :start_unixtime,
                         :end, :end_unixtime, :job, :description, :argstring, :successful_nodes,
-                        :failed_nodes, :aborted_by
+                        :failed_nodes, :aborted_by, :permalink
 
           def self.all(client,max)
             all = []
@@ -788,6 +789,7 @@ module Lita
 
           def initialize(hash)
             @id               = hash["id"]
+            @permalink        = hash["permalink"]
             @href             = hash["href"]
             @status           = hash["status"]
             @message          = hash["message"]
